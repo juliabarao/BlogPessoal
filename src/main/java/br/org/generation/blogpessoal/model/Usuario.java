@@ -42,13 +42,14 @@ public class Usuario {
 	
 	@Column(name = "dt_nascimento")
 	@JsonFormat(pattern="yyyy-MM-dd")
+	@NotNull(message = "O atributo Data de Nascimento é obrigatório!")
     private LocalDate dataNascimento;
 	
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
 	@JsonIgnoreProperties("usuario")
 	private List<Postagens> postagens;
 	
-		public Usuario(long id, String nome, String usuario, String senha, LocalDate dataNascimento) {
+	public Usuario(long id, String nome, String usuario, String senha, LocalDate dataNascimento) {
 		this.id = id;
 		this.nome = nome;
 		this.usuario = usuario;

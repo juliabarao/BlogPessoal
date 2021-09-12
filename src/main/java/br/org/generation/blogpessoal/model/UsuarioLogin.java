@@ -11,6 +11,7 @@ public class UsuarioLogin {
 	private String senha;
 	
 	private String token;
+	
 
 	public long getId() {
 		return id;

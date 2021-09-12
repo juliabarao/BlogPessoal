@@ -1,7 +1,6 @@
 package br.org.generation.blogpessoal.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,40 +31,39 @@ public class PostagensController {
 		return ResponseEntity.ok(postagensRepository.findAll());
 	}
 	
-	@GetMapping("idifelse/{id}")
-	public ResponseEntity<Postagens> getByIdIfElse(@PathVariable long id){
-		
-		Optional<Postagens> postagens = postagensRepository.findById(id);
-		
-		if(postagens.isPresent()) {
-			return ResponseEntity.ok(postagens.get());
-		}
-		return ResponseEntity.notFound().build();
-	}
 	@GetMapping("/{id}")
 	public ResponseEntity<Postagens> getById(@PathVariable long id){
+		
 		return postagensRepository.findById(id)
 				.map(resp -> ResponseEntity.ok(resp))
 				.orElse(ResponseEntity.notFound().build());
+		
 	}
 	
 	@GetMapping("/titulo/{titulo}")
 	public ResponseEntity<List<Postagens>> getByTitulo(@PathVariable String titulo){
+		
 		return ResponseEntity.ok(postagensRepository.findAllByTituloContainingIgnoreCase(titulo));
+		
 	}
 	
 	@PostMapping
 	public ResponseEntity<Postagens> postPostagens(@RequestBody Postagens postagens){
+		
 		return ResponseEntity.status(HttpStatus.CREATED).body(postagensRepository.save(postagens));
+		
 	}
 	
 	@PutMapping
 	public ResponseEntity<Postagens> putPostagens(@RequestBody Postagens postagens){
+		
 		return ResponseEntity.status(HttpStatus.OK).body(postagensRepository.save(postagens));
 	}
 	
-	@DeleteMapping
+	@DeleteMapping("/{id}")
 	public void deletePostagens(@PathVariable long id) {
+		
 		postagensRepository.deleteById(id);
+		
 	}
 }
